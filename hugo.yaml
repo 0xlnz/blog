@@ -22,9 +22,12 @@ params:
   author: 0xlnz
   images: ["images/profile.jpg"]
   dateFormat: "January 2, 2006"
-  defaultTheme: auto
+  defaultTheme: dark
   disableThemeToggle: false
-
+  ShowReadingTime: true
+  ShowBreadCrumbs: false
+  ShowCodeCopyButtons: false
+  
   assets:
     disableHLJS: true # We will use Chroma
     # customCSS: ["css/custom.css"] # Alternative if extended not working
@@ -68,11 +71,15 @@ menu:
       name: Tags
       url: /tags/
       weight: 40
+    # - identifier: search
+      # name: 🔎︎
+      # url: /search/
+      # weight: 40
 
 markup:
   highlight:
     noClasses: false
-    anchorLineNos: true
+    anchorLineNos: false
     codeFences: true
     guessSyntax: true
     lineNos: true
@@ -82,3 +89,9 @@ markup:
 taxonomies:
   category: categories
   tag: tags
+  
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON # necessary for search

@@ -12,7 +12,7 @@
 
 .terminal-header {
   background-color: #2d2d2d; /* Title bar color */
-  padding: 8px 15px;
+  padding: 1px 15px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #333;

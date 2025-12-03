@@ -5,6 +5,13 @@ draft: false
 tags: ["hugo", "design", "Code"]
 categories: ["tech"]
 summary: "A demonstration of the custom terminal styling and render hooks."
+cover:
+  image: "images/hello.jpg"
+  alt: "Hello World"
+  relative: true # To use relative path for cover image, used in hugo Page-bundle
+ShowToc: false
+TocOpen: false
+
 ---
 
 Welcome to my blog! This is a just sample post to demonstrate the custom styling I've implemented.
