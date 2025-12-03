@@ -1,0 +1,84 @@
+baseURL: "https://0xlnz.github.io/blog/"
+languageCode: "en-us"
+title: "Technologic Soup"
+theme: "PaperMod"
+
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+
+googleAnalytics: ""
+
+minify:
+  disableXML: true
+  minifyOutput: true
+
+params:
+  env: production
+  title: My Blog
+  description: "A personal blog about things."
+  keywords: [Blog, Portfolio, PaperMod]
+  author: 0xlnz
+  images: ["images/profile.jpg"]
+  dateFormat: "January 2, 2006"
+  defaultTheme: auto
+  disableThemeToggle: false
+
+  assets:
+    disableHLJS: true # We will use Chroma
+    # customCSS: ["css/custom.css"] # Alternative if extended not working
+
+  profileMode:
+    enabled: true
+    title: "Hello, I'm Lorenzo."
+    subtitle: "Solutions Architect | Tinkerer | Automation Zealot"
+    imageUrl: "images/profile.jpg"
+    imageWidth: 120
+    imageHeight: 120
+    imageTitle: "My Profile"
+    # buttons:
+      # - name: Github
+        # url: "https://github.com/0xlnz"
+      # - name: Linkedin
+        # url: "https://www.linkedin.com"
+
+  # Social Icons at the bottom of profile
+  socialIcons:
+    - name: github
+      url: "https://github.com/0xlnz"
+    - name: Linkedin
+      url: "https://www.linkedin.com"
+
+menu:
+  main:
+    - identifier: blog
+      name: Blog
+      url: /blog/
+      weight: 10
+    - identifier: projects
+      name: Projects
+      url: /projects/
+      weight: 20
+    - identifier: notes
+      name: Notes
+      url: /notes/
+      weight: 30
+    - identifier: tags
+      name: Tags
+      url: /tags/
+      weight: 40
+
+markup:
+  highlight:
+    noClasses: false
+    anchorLineNos: true
+    codeFences: true
+    guessSyntax: true
+    lineNos: true
+    style: monokai
+    tabWidth: 4
+
+taxonomies:
+  category: categories
+  tag: tags

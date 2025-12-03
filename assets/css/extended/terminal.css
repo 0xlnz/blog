@@ -1,0 +1,182 @@
+/* Terminal Window Styling */
+.terminal-window {
+  background-color: #1e1e1e; /* Dark background matches Monokai generally */
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  margin: 2rem 0;
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+  border: 1px solid #333;
+  position: relative; /* For copy button positioning */
+}
+
+.terminal-header {
+  background-color: #2d2d2d; /* Title bar color */
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #333;
+  position: relative;
+  z-index: 2;
+}
+
+.terminal-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.terminal-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.terminal-button.close {
+  background-color: #ff5f56;
+}
+
+.terminal-button.minimize {
+  background-color: #ffbd2e;
+}
+
+.terminal-button.maximize {
+  background-color: #27c93f;
+}
+
+.terminal-title {
+  flex-grow: 1;
+  text-align: center;
+  color: #999;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-left: 10px; 
+  margin-right: 10px;
+}
+
+/* Content Area */
+.terminal-content {
+  padding: 0;
+  color: #f8f8f2;
+  background-color: #272822; /* Exact Monokai background */
+  position: relative;
+}
+
+/* Copy Button Styling */
+.copy-button {
+  background: transparent;
+  border: none;
+  color: #888;
+  padding: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  
+  /* New styling: Hidden by default, grayscale */
+  opacity: 0;
+  filter: grayscale(100%);
+}
+
+/* Show on hover of the window */
+.terminal-window:hover .copy-button {
+  opacity: 1;
+}
+
+/* Hover state for the button itself */
+.copy-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  filter: grayscale(0%); /* Color on hover */
+}
+
+.copy-button.copied {
+  color: #27c93f;
+  filter: grayscale(0%); /* Always color when copied */
+  opacity: 1; /* Ensure visibility when copied */
+}
+
+/* Override Hugo/Chroma default structures */
+.terminal-content .highlight {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+  border-radius: 0 0 8px 8px;
+}
+
+.terminal-content pre {
+  margin: 0 !important;
+  padding: 1rem !important;
+  background-color: #272822 !important; /* Force Monokai bg */
+  border: none !important;
+  border-radius: 0 0 8px 8px;
+  overflow-x: auto;
+}
+
+/* Fix Table layout for Line Numbers */
+.terminal-content .lntable {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  background-color: transparent !important;
+}
+
+.terminal-content .lntd {
+  padding: 0 !important;
+  vertical-align: top;
+  border: none !important;
+  background-color: transparent !important;
+}
+
+/* Line Numbers Column */
+.terminal-content .lntd:first-child {
+  width: 1%;
+  user-select: none;
+}
+
+.terminal-content .lntd:first-child pre {
+  padding: 0 10px 0 0 !important; /* Right padding only */
+  margin: 0 !important;
+  background-color: transparent !important;
+  color: #75715e !important; /* Monokai comment color for line numbers */
+  text-align: right;
+}
+
+/* Remove underline from line number links */
+/* Using a very specific selector to override any theme defaults */
+.terminal-content .lntd:first-child a,
+.terminal-content .lntd:first-child span,
+.terminal-content .lntd:first-child pre a {
+  text-decoration: none !important;
+  color: inherit !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Code Column */
+.terminal-content .lntd:last-child {
+  width: auto;
+}
+
+.terminal-content .lntd:last-child pre {
+  padding: 0 0 0 10px !important; /* Left padding only */
+  margin: 0 !important;
+  background-color: transparent !important;
+}
+
+/* Ensure code text contrast */
+.terminal-content code {
+  background-color: transparent !important;
+  color: inherit !important;
+  font-family: inherit;
+}
+
+/* Header Nav Links Wrapper */
+.nav-links {
+  display: flex;
+  align-items: center;
+}

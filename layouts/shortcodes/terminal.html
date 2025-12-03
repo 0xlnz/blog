@@ -1,0 +1,14 @@
+<div class="terminal-window">
+  <div class="terminal-header">
+    <div class="terminal-controls">
+      <div class="terminal-button close"></div>
+      <div class="terminal-button minimize"></div>
+      <div class="terminal-button maximize"></div>
+    </div>
+    <div class="terminal-title">{{ .Get "title" | default "Terminal" }}</div>
+    <button class="copy-button" aria-label="Copy code">📋</button>
+  </div>
+  <div class="terminal-content">
+    {{ .Inner }}
+  </div>
+</div>

@@ -1,0 +1,22 @@
+{{ $class := .Attributes.class | default "" }}
+{{ $lang := .Type | default "text" }}
+{{ $title := $lang }}
+{{ if eq $lang "bash" }}{{ $title = "Terminal" }}{{ end }}
+{{ if eq $lang "sh" }}{{ $title = "Terminal" }}{{ end }}
+{{ if eq $lang "console" }}{{ $title = "Terminal" }}{{ end }}
+{{ if .Attributes.title }}{{ $title = .Attributes.title }}{{ end }}
+
+<div class="terminal-window">
+  <div class="terminal-header">
+    <div class="terminal-controls">
+      <div class="terminal-button close"></div>
+      <div class="terminal-button minimize"></div>
+      <div class="terminal-button maximize"></div>
+    </div>
+    <div class="terminal-title">{{ $title }}</div>
+    <button class="copy-button" aria-label="Copy code">📋</button>
+  </div>
+  <div class="terminal-content">
+    {{ transform.Highlight .Inner .Type .Options }}
+  </div>
+</div>

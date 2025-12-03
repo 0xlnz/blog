@@ -1,0 +1,38 @@
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.copy-button').forEach(button => {
+    button.addEventListener('click', () => {
+      const window = button.closest('.terminal-window');
+      const container = window.querySelector('.terminal-content');
+      
+      // Try to find the code element.
+      let codeText = '';
+      const chromaCode = container.querySelector('.chroma .lntd:last-child pre code');
+      const basicCode = container.querySelector('pre code');
+
+      if (chromaCode) {
+        codeText = chromaCode.innerText;
+      } else if (basicCode) {
+        codeText = basicCode.innerText;
+      } else {
+        // Fallback for plain text content inside terminal shortcode
+        codeText = container.innerText;
+      }
+      
+      if (codeText) {
+        navigator.clipboard.writeText(codeText).then(() => {
+          const originalText = button.innerText;
+          button.innerText = '✅'; // Checkmark emoji
+          button.classList.add('copied');
+          setTimeout(() => {
+            button.innerText = '📄'; // Revert to page emoji
+            button.classList.remove('copied');
+          }, 2000);
+        }).catch(err => {
+          console.error('Failed to copy: ', err);
+        });
+      }
+    });
+  });
+});
+</script>
