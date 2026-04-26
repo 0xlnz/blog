@@ -1,5 +1,6 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+  // Copy to clipboard functionality
   document.querySelectorAll('.copy-button').forEach(button => {
     button.addEventListener('click', () => {
       const window = button.closest('.terminal-window');
@@ -34,5 +35,44 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // Glitch effect trigger
+  const glitchElement = document.querySelector('.glitch');
+  const originalName = "Lorenzo";
+  const glitchChars = "¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ0123456789!@#$%^&*()_+";
+
+  if (glitchElement) {
+    function scrambleText() {
+      let scrambled = "";
+      for (let i = 0; i < originalName.length; i++) {
+        if (Math.random() > 0.7) {
+          scrambled += glitchChars[Math.floor(Math.random() * glitchChars.length)];
+        } else {
+          scrambled += originalName[i];
+        }
+      }
+      glitchElement.innerText = scrambled;
+    }
+
+    function triggerGlitch() {
+      glitchElement.classList.add('active');
+      
+      // Rapidly scramble text during the glitch
+      const scrambleInterval = setInterval(scrambleText, 50);
+      
+      const duration = Math.random() * 600 + 300;
+      
+      setTimeout(() => {
+        clearInterval(scrambleInterval);
+        glitchElement.classList.remove('active');
+        glitchElement.innerText = originalName;
+        
+        const nextInterval = Math.random() * 7000 + 1500;
+        setTimeout(triggerGlitch, nextInterval);
+      }, duration);
+    }
+    
+    setTimeout(triggerGlitch, 3000);
+  }
 });
 </script>
