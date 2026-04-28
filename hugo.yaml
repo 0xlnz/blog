@@ -27,10 +27,9 @@ params:
   ShowReadingTime: true
   ShowBreadCrumbs: false
   ShowCodeCopyButtons: false
-  
+
   assets:
-    disableHLJS: true # We will use Chroma
-    # customCSS: ["css/custom.css"] # Alternative if extended not working
+    disableHLJS: true # We use Chroma
 
   profileMode:
     enabled: true
@@ -39,19 +38,15 @@ params:
     imageUrl: "images/profile.jpg"
     imageWidth: 120
     imageHeight: 120
-    imageTitle: "My Profile"
-    # buttons:
-      # - name: Github
-        # url: "https://github.com/0xlnz"
-      # - name: Linkedin
-        # url: "https://www.linkedin.com"
+    imageTitle: "That's me!"
 
-  # Social Icons at the bottom of profile
   socialIcons:
     - name: github
       url: "https://github.com/0xlnz"
     - name: Linkedin
       url: "https://www.linkedin.com"
+    - name: rss
+      url: "index.xml"
 
 menu:
   main:
@@ -59,22 +54,14 @@ menu:
       name: Blog
       url: /blog/
       weight: 10
-    - identifier: projects
-      name: Projects
-      url: /projects/
+    - identifier: about
+      name: About
+      url: /about/
       weight: 20
-    - identifier: notes
-      name: Notes
-      url: /notes/
-      weight: 30
     - identifier: tags
       name: Tags
       url: /tags/
-      weight: 40
-    # - identifier: search
-      # name: 🔎︎
-      # url: /search/
-      # weight: 40
+      weight: 30
 
 markup:
   highlight:
@@ -89,7 +76,7 @@ markup:
 taxonomies:
   category: categories
   tag: tags
-  
+
 outputs:
   home:
     - HTML

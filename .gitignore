@@ -5,3 +5,4 @@ resources/
 .DS_Store
 .env
 GEMINI.md
+CLAUDE.md

@@ -1,0 +1,31 @@
+{{- define "main" }}
+<div class="terminal-window" style="max-width: 640px; margin: 4rem auto;">
+  <div class="terminal-header">
+    <div class="terminal-controls">
+      <div class="terminal-button close"></div>
+      <div class="terminal-button minimize"></div>
+      <div class="terminal-button maximize"></div>
+    </div>
+    <div class="terminal-title">~/404</div>
+  </div>
+  <div class="terminal-content" style="padding: 1.25rem 1.5rem; font-family: 'Menlo', 'Monaco', 'Courier New', monospace; line-height: 1.6;">
+    <div style="color: #f8f8f2;">
+      <span style="color: #a6e22e;">$</span>
+      <span style="color: #66d9ef;">cat</span> <span class="js-404-path">/</span>
+    </div>
+    <div style="color: #ff5f56; margin-top: 0.25rem;">
+      cat: <span class="js-404-path">/</span>: No such file or directory
+    </div>
+    <div style="margin-top: 1rem; color: #f8f8f2;">
+      <span style="color: #a6e22e;">$</span>
+      <a href="{{ "" | absLangURL }}" style="color: #fd971f; text-decoration: none; border-bottom: 1px dashed #fd971f;">cd ~</a>
+    </div>
+  </div>
+</div>
+<script>
+  (function () {
+    var path = window.location.pathname || '/';
+    document.querySelectorAll('.js-404-path').forEach(function (el) { el.textContent = path; });
+  })();
+</script>
+{{- end }}

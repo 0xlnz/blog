@@ -1,78 +1,76 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Copy to clipboard functionality
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Copy to clipboard
   document.querySelectorAll('.copy-button').forEach(button => {
-    button.addEventListener('click', () => {
-      const window = button.closest('.terminal-window');
-      const container = window.querySelector('.terminal-content');
-      
-      // Try to find the code element.
-      let codeText = '';
+    button.addEventListener('click', async () => {
+      const window_ = button.closest('.terminal-window');
+      const container = window_.querySelector('.terminal-content');
+
       const chromaCode = container.querySelector('.chroma .lntd:last-child pre code');
       const basicCode = container.querySelector('pre code');
+      const codeText = chromaCode ? chromaCode.innerText
+        : basicCode ? basicCode.innerText
+        : container.innerText;
 
-      if (chromaCode) {
-        codeText = chromaCode.innerText;
-      } else if (basicCode) {
-        codeText = basicCode.innerText;
-      } else {
-        // Fallback for plain text content inside terminal shortcode
-        codeText = container.innerText;
-      }
-      
-      if (codeText) {
-        navigator.clipboard.writeText(codeText).then(() => {
-          const originalText = button.innerText;
-          button.innerText = '✅'; // Checkmark emoji
-          button.classList.add('copied');
-          setTimeout(() => {
-            button.innerText = '📋'; // Revert to page emoji
-            button.classList.remove('copied');
-          }, 2000);
-        }).catch(err => {
-          console.error('Failed to copy: ', err);
-        });
+      if (!codeText) return;
+
+      try {
+        await navigator.clipboard.writeText(codeText);
+        button.classList.add('copied');
+        button.setAttribute('aria-label', 'Copied');
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.setAttribute('aria-label', 'Copy code');
+        }, 2000);
+      } catch (err) {
+        button.classList.add('error');
+        button.setAttribute('aria-label', 'Copy failed');
+        setTimeout(() => {
+          button.classList.remove('error');
+          button.setAttribute('aria-label', 'Copy code');
+        }, 2000);
       }
     });
   });
 
-  // Glitch effect trigger
+  // Glitch effect — hover-triggered, plus one welcome glitch on load.
+  // Disabled entirely under prefers-reduced-motion.
   const glitchElement = document.querySelector('.glitch');
-  const originalName = "Lorenzo";
+  if (!glitchElement || reducedMotion) return;
+
+  const originalName = glitchElement.dataset.text || glitchElement.innerText;
   const glitchChars = "¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ0123456789!@#$%^&*()_+";
+  let isGlitching = false;
 
-  if (glitchElement) {
-    function scrambleText() {
-      let scrambled = "";
-      for (let i = 0; i < originalName.length; i++) {
-        if (Math.random() > 0.7) {
-          scrambled += glitchChars[Math.floor(Math.random() * glitchChars.length)];
-        } else {
-          scrambled += originalName[i];
-        }
-      }
-      glitchElement.innerText = scrambled;
+  function scrambleText() {
+    let scrambled = "";
+    for (let i = 0; i < originalName.length; i++) {
+      scrambled += Math.random() > 0.7
+        ? glitchChars[Math.floor(Math.random() * glitchChars.length)]
+        : originalName[i];
     }
-
-    function triggerGlitch() {
-      glitchElement.classList.add('active');
-      
-      // Rapidly scramble text during the glitch
-      const scrambleInterval = setInterval(scrambleText, 50);
-      
-      const duration = Math.random() * 600 + 300;
-      
-      setTimeout(() => {
-        clearInterval(scrambleInterval);
-        glitchElement.classList.remove('active');
-        glitchElement.innerText = originalName;
-        
-        const nextInterval = Math.random() * 7000 + 1500;
-        setTimeout(triggerGlitch, nextInterval);
-      }, duration);
-    }
-    
-    setTimeout(triggerGlitch, 3000);
+    glitchElement.innerText = scrambled;
   }
+
+  function triggerGlitch() {
+    if (isGlitching) return;
+    isGlitching = true;
+    glitchElement.classList.add('active');
+    const scrambleInterval = setInterval(scrambleText, 50);
+    const duration = Math.random() * 600 + 300;
+    setTimeout(() => {
+      clearInterval(scrambleInterval);
+      glitchElement.classList.remove('active');
+      glitchElement.innerText = originalName;
+      isGlitching = false;
+    }, duration);
+  }
+
+  glitchElement.addEventListener('mouseenter', triggerGlitch);
+  glitchElement.addEventListener('focus', triggerGlitch);
+  glitchElement.setAttribute('tabindex', '0');
+  setTimeout(triggerGlitch, 600);
 });
 </script>
