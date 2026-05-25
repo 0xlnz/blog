@@ -1,10 +1,10 @@
 // Virtual Filesystem
 const FILESYSTEM = {
-  'README.md': 'Welcome to Retro-Term shell!\n\nThis is a portfolio/sandbox web terminal.\nType "help" to display a list of all available commands.\n\nUse "ls" to list files and "cat [filename]" to read files.',
-  'about.txt': '--- BIOGRAPHY ---\n\nName: guest_developer\nRole: Agentic Systems engineer & Web UI artisan\nAffiliation: Advanced Agentic Coding, DeepMind\nStatus: Online & Ready for Deployment\n\nBio: Passionate about blending rich, high-fidelity visual design with core software engineering. Believes that command-line interfaces are the ultimate expression of human-computer interaction, especially with a CRT filter.',
-  'skills.txt': '==================== SKILLS & TECHNOLOGIES ====================\n\n  [LANGUAGES]    JavaScript (ES6+), TypeScript, HTML5/CSS3, Python, C++\n  [FRAMEWORKS]   React, Next.js, Vue, Node.js, Express, Fastify\n  [DEV-TOOLS]    Git, Docker, Kubernetes, Linux Bash Shell, Vim\n  [AI/AGENTS]    Gemini API, LLM Prompt Engineering, Agent Workflows\n\n===============================================================',
-  'projects.txt': '========================= PROJECTS =========================\n\n* Project-Alpha (Voxel Engine)\n  - A hardware-accelerated 3D voxel sandbox in Vanilla JS.\n  - Tech: Three.js, WebGL, Web Audio API\n\n* Project-Beta (Agentic Coder)\n  - Multi-agent programming environment with execution feedback.\n  - Tech: Python, Gemini 1.5 Pro, WebSockets\n\n* Project-Gamma (Retro Synth)\n  - A retro-style modular synthesizer that runs in the browser.\n  - Tech: HTML5 Canvas, Web Audio API\n\n=============================================================',
-  'contact.txt': 'Email:    guest@retro-term.dev\nGitHub:   github.com/retro-term\nLinkedIn: linkedin.com/in/retro-term\nTwitter:  @retro_term_dev\n\nFeel free to reach out via transmission links!',
+  'README.md': 'Welcome to Technologic Soup shell!\n\nThis is a portfolio/sandbox web terminal.\nType "help" to display a list of all available commands.\n\nUse "ls" to list files and "cat [filename]" to read files.',
+  'about.txt': '--- BIOGRAPHY ---\n\nName: Lorenzo\nHandle: 0xlnz\nRole: Staff Solutions Architect\nSpecialty: Enterprise Storage & DevOps Automation\nLocation: Italy\nStatus: Online & Automating\n\nBio: Solutions Architect focused on enterprise data storage, disaster recovery, and cloud-native automation. I design and operate complex, secure platforms and lean on Infrastructure as Code to keep humans out of the toil loop.',
+  'skills.txt': '==================== SKILLS & TECHNOLOGIES ====================\n\n  [STORAGE]      NFS Enthusiast, S3,  NVMe, SMB, FCP\n  [CLOUD]        AWS, Azure, GCP, OCI\n  [CONTAINERS]   K8s, OpenShift, Docker\n  [IAC/CI-CD]    Ansible, Terraform, ArgoCD, Git\n  [LANGUAGES]    Python, Bash, GO, RUST\n  [VIRT]         VMware vSphere, KVM, OpenStack, Proxmox\n  [PRACTICES]    Disaster Recovery, Business Continuity   \n\n===============================================================',
+  'projects.txt': '========================= PROJECTS =========================\n\n* Geo-distributed Cloud Storage\n  - Multi-region storage with automated DR and 3-2-1 backup.\n  - Tech: NetApp, Ansible, Object Storage\n\n* Metro-cluster for Mission-Critical Continuity\n  - Synchronous metro-cluster supporting always-on workloads.\n  - Tech: NetApp MetroCluster, VMware\n\n* Kubernetes Persistent Storage on Public Cloud\n  - K8s persistent volumes with cross-region disaster recovery.\n  - Tech: Azure, Trident, NetApp Cloud Volumes\n\n* Zero-RPO/RTO File Storage DR\n  - Fully automated DR runbook for global file services.\n  - Tech: Ansible, SnapMirror, Python\n\n* Distributed Storage for High-IOPS Workloads\n  - Hyperconverged storage tier for analysis-heavy VM workloads.\n  - Tech: NetApp, VMware\n\n* Multi-site Converged Infrastructure\n  - FlexPod rollout across primary and DR datacenters.\n  - Tech: NetApp, Cisco UCS, VMware\n\n=============================================================',
+  'contact.txt': 'GitHub:   github.com/0xlnz\nBlog:     0xlnz.github.io/blog\n\nReach out via GitHub — transmissions over public channels only.',
   'secret.sh': 'echo "INTRUDER ALERT! Initiating security purge..."\nsleep 1.5\necho "Purge canceled. Just kidding. Try running the \'matrix\' command!"'
 };
 
@@ -113,7 +113,7 @@ function executeCommand(input, terminal) {
 
   if (cmd === 'sudo') {
     terminal.playBeep(220, 0.35, 'sawtooth');
-    return '<span class="error">ACCESS RESTRICTED: guest_user is not in the sudoers file. This incident will be reported to the virtual operator.</span>';
+    return '<span class="error">ACCESS DENIED: [guest] is not in the sudoers file. This incident will be reported.</span>';
   }
 
   if (cmd === 'secret.sh' || cmd === './secret.sh') {

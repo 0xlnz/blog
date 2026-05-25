@@ -26,7 +26,7 @@ class RetroTerminal {
 
   init() {
     // DOM Element References
-    this.root = document.getElementById('retro-terminal');
+    this.root = document.getElementById('technologic-soup-terminal');
     this.input = document.getElementById('terminal-input');
     this.inputDisplay = document.getElementById('input-display');
     this.output = document.getElementById('output');
@@ -452,7 +452,7 @@ class RetroTerminal {
 
     // ── Compact boot sequence: BIOS header + 4 progress stages + ready ──
     this.playBeep(820, 0.08, 'square');
-    await writeBootLog('<span class="dim">[ 0.000000]</span> RETRO-TERM BIOS v1.82.04 <span class="dim">(build 2024.11.21)</span>', 'bright', 3);
+    await writeBootLog('<span class="dim">[ 0.000000]</span> TECHNOLOGIC SOUP BIOS v1.82.04 <span class="dim">(build 2024.11.21)</span>', 'bright', 3);
     await writeBootLog('<span class="dim">[ 0.012451]</span> CPU: 80486-DX2 @ 66MHz / FPU / L1=16KB  <span class="bright">[verified]</span>', 'system', 2);
     await this.sleep(80);
 
@@ -481,7 +481,7 @@ class RetroTerminal {
     await writeBootLog('<span class="dim">[ 2.158334]</span> login: guest <span class="dim">(auto)</span>', 'dim', 2);
 
     // Welcome banner (full-width below the boot panes)
-    await this.writeLineAsync('\n<span class="bright">guest@retro-term</span> connected successfully.', 'system', 8);
+    await this.writeLineAsync('\n<span class="bright">guest@technologic-soup</span> connected successfully.', 'system', 8);
     await this.writeLineAsync('Type <span class="bright">help</span> for available commands.  Use <span class="bright">Tab</span> for autocomplete, <span class="bright">↑/↓</span> for history.', 'dim', 6);
     await this.writeLineAsync('\n', '', 0);
 
@@ -655,7 +655,7 @@ class RetroTerminal {
       this.playKeyClick();
     } else if (suggestions.length > 1) {
       // Multiple matches, write prompt line + options list
-      this.writeLine(`guest@retro-term:~$ ${this.input.value}`, 'dim');
+      this.writeLine(`guest@technologic-soup:~$ ${this.input.value}`, 'dim');
       this.writeLine(suggestions.join('    '), 'system');
       this.playBeep(700, 0.05, 'sine');
     }
@@ -665,7 +665,7 @@ class RetroTerminal {
     const input = rawInput.trim();
     
     // Log prompt and typed command to terminal buffer
-    this.writeLine(`guest@retro-term:~$ ${rawInput}`);
+    this.writeLine(`guest@technologic-soup:~$ ${rawInput}`);
 
     if (!input) return;
 

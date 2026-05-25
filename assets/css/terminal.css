@@ -1,12 +1,12 @@
 /* Derived from /home/l/code/agy/style.css. Structural changes here are
-   intentional (scoped to #retro-terminal, PaperMod overrides). Do not rsync. */
+   intentional (scoped to #technologic-soup-terminal, PaperMod overrides). Do not rsync. */
 
 /* PaperMod layout overrides — only loaded on /terminal/ */
 main.main { max-width: none; padding: 0; }
 footer.footer { display: none; }
 
 /* Design System Tokens (terminal-scoped, single green phosphor theme) */
-#retro-terminal {
+#technologic-soup-terminal {
   --font-terminal: 'VT323', monospace;
   --font-ui: 'Share Tech Mono', monospace;
 
@@ -20,10 +20,10 @@ footer.footer { display: none; }
 }
 
 /* Scoped reset (replaces agy's universal * reset to avoid leaking) */
-#retro-terminal,
-#retro-terminal *,
-#retro-terminal *::before,
-#retro-terminal *::after {
+#technologic-soup-terminal,
+#technologic-soup-terminal *,
+#technologic-soup-terminal *::before,
+#technologic-soup-terminal *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -32,7 +32,7 @@ footer.footer { display: none; }
 /* Wrapper (replaces agy's body rule — no longer fullscreen-on-document).
    Background is transparent so Hugo's body color (var(--theme), set by
    PaperMod's dark/light scheme) shows around the CRT housing. */
-#retro-terminal {
+#technologic-soup-terminal {
   background: transparent;
   color: var(--text-color);
   font-family: var(--font-terminal);
@@ -50,7 +50,7 @@ footer.footer { display: none; }
 }
 
 /* Main CRT Monitor Housing */
-#retro-terminal .crt-monitor {
+#technologic-soup-terminal .crt-monitor {
   width: 94%;
   height: 90%;
   max-width: 1100px;
@@ -69,7 +69,7 @@ footer.footer { display: none; }
 }
 
 /* Monitor Screen Frame Bezel Inner Shadow */
-#retro-terminal .crt-bezel {
+#technologic-soup-terminal .crt-bezel {
   width: 100%;
   height: 100%;
   border-radius: 12px;
@@ -84,7 +84,7 @@ footer.footer { display: none; }
 }
 
 /* The Screen itself */
-#retro-terminal .crt-screen {
+#technologic-soup-terminal .crt-screen {
   width: 100%;
   height: 100%;
   background-color: var(--bg-color);
@@ -99,7 +99,7 @@ footer.footer { display: none; }
 }
 
 /* CRT Screen Effects Filter Overlays */
-#retro-terminal .scanlines {
+#technologic-soup-terminal .scanlines {
   position: absolute;
   top: 0;
   left: 0;
@@ -116,7 +116,7 @@ footer.footer { display: none; }
   pointer-events: none;
 }
 
-#retro-terminal .screen-flicker {
+#technologic-soup-terminal .screen-flicker {
   position: absolute;
   top: 0;
   left: 0;
@@ -128,10 +128,10 @@ footer.footer { display: none; }
   opacity: 0.15;
   z-index: 11;
   pointer-events: none;
-  animation: retro-terminal-flicker 0.15s infinite;
+  animation: technologic-soup-flicker 0.15s infinite;
 }
 
-#retro-terminal .screen-glare {
+#technologic-soup-terminal .screen-glare {
   position: absolute;
   top: 0;
   left: 0;
@@ -149,7 +149,7 @@ footer.footer { display: none; }
 }
 
 /* Vignette border shadow */
-#retro-terminal .crt-screen::after {
+#technologic-soup-terminal .crt-screen::after {
   content: " ";
   display: block;
   position: absolute;
@@ -160,7 +160,7 @@ footer.footer { display: none; }
 }
 
 /* Header styling */
-#retro-terminal .terminal-header {
+#technologic-soup-terminal .terminal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -173,36 +173,36 @@ footer.footer { display: none; }
   user-select: none;
 }
 
-#retro-terminal .header-left,
-#retro-terminal .header-center,
-#retro-terminal .header-right {
+#technologic-soup-terminal .header-left,
+#technologic-soup-terminal .header-center,
+#technologic-soup-terminal .header-right {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-#retro-terminal .status-indicator {
+#technologic-soup-terminal .status-indicator {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   box-shadow: 0 0 8px var(--text-color);
 }
-#retro-terminal .status-indicator.online {
+#technologic-soup-terminal .status-indicator.online {
   background-color: var(--text-color);
 }
 
-#retro-terminal .header-title {
+#technologic-soup-terminal .header-title {
   color: var(--text-color);
   font-weight: bold;
 }
 
-#retro-terminal .header-path {
+#technologic-soup-terminal .header-path {
   color: var(--text-dim);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-#retro-terminal .header-btn {
+#technologic-soup-terminal .header-btn {
   background: transparent;
   border: 1px solid var(--text-dim);
   color: var(--text-color);
@@ -218,14 +218,14 @@ footer.footer { display: none; }
   text-shadow: 0 0 2px var(--glow-color);
 }
 
-#retro-terminal .header-btn:hover {
+#technologic-soup-terminal .header-btn:hover {
   background: var(--text-dim);
   color: var(--bg-color);
   box-shadow: 0 0 10px var(--glow-color);
 }
 
 /* Terminal Body / Output Console */
-#retro-terminal .terminal-body {
+#technologic-soup-terminal .terminal-body {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
@@ -237,22 +237,22 @@ footer.footer { display: none; }
 }
 
 /* Scrollbar Customization */
-#retro-terminal .terminal-body::-webkit-scrollbar {
+#technologic-soup-terminal .terminal-body::-webkit-scrollbar {
   width: 8px;
 }
-#retro-terminal .terminal-body::-webkit-scrollbar-track {
+#technologic-soup-terminal .terminal-body::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.1);
 }
-#retro-terminal .terminal-body::-webkit-scrollbar-thumb {
+#technologic-soup-terminal .terminal-body::-webkit-scrollbar-thumb {
   background: var(--text-dim);
   border-radius: 4px;
 }
-#retro-terminal .terminal-body::-webkit-scrollbar-thumb:hover {
+#technologic-soup-terminal .terminal-body::-webkit-scrollbar-thumb:hover {
   background: var(--text-color);
   box-shadow: 0 0 8px var(--glow-color);
 }
 
-#retro-terminal .terminal-output {
+#technologic-soup-terminal .terminal-output {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -260,34 +260,34 @@ footer.footer { display: none; }
 }
 
 /* Text elements & utilities */
-#retro-terminal .line {
+#technologic-soup-terminal .line {
   line-height: 1.35;
   white-space: pre-wrap;
   word-break: break-all;
 }
 
-#retro-terminal .dim {
+#technologic-soup-terminal .dim {
   color: var(--text-dim);
   text-shadow: none;
 }
 
-#retro-terminal .bright {
+#technologic-soup-terminal .bright {
   font-weight: bold;
   color: #fff;
   text-shadow: 0 0 8px var(--text-color);
 }
 
-#retro-terminal .system {
+#technologic-soup-terminal .system {
   color: var(--text-color);
 }
 
-#retro-terminal .error {
+#technologic-soup-terminal .error {
   color: #ff3333;
   text-shadow: 0 0 6px rgba(255, 51, 51, 0.5);
 }
 
 /* ANSI-style Grid Tables */
-#retro-terminal .terminal-grid {
+#technologic-soup-terminal .terminal-grid {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 6px 20px;
@@ -296,31 +296,31 @@ footer.footer { display: none; }
   border-left: 2px solid var(--text-dim);
 }
 
-#retro-terminal .grid-key {
+#technologic-soup-terminal .grid-key {
   color: var(--text-color);
   font-weight: bold;
 }
 
-#retro-terminal .grid-val {
+#technologic-soup-terminal .grid-val {
   color: var(--text-dim);
 }
 
 /* Prompt Line & Input */
-#retro-terminal .input-line {
+#technologic-soup-terminal .input-line {
   display: flex;
   align-items: center;
   position: relative;
   width: 100%;
 }
 
-#retro-terminal .prompt {
+#technologic-soup-terminal .prompt {
   color: var(--text-color);
   margin-right: 10px;
   font-weight: bold;
   user-select: none;
 }
 
-#retro-terminal .input-content {
+#technologic-soup-terminal .input-content {
   color: var(--text-color);
   white-space: pre-wrap;
   word-break: break-all;
@@ -328,7 +328,7 @@ footer.footer { display: none; }
   line-height: 24px;
 }
 
-#retro-terminal .cursor {
+#technologic-soup-terminal .cursor {
   display: inline-block;
   background-color: var(--text-color);
   color: var(--bg-color);
@@ -338,12 +338,12 @@ footer.footer { display: none; }
   vertical-align: middle;
   text-indent: -9999px;
   overflow: hidden;
-  animation: retro-terminal-blink 0.8s step-end infinite;
+  animation: technologic-soup-blink 0.8s step-end infinite;
   box-shadow: 0 0 6px var(--glow-color);
 }
 
 /* The real input is hidden, capturing typing events */
-#retro-terminal #terminal-input {
+#technologic-soup-terminal #terminal-input {
   position: absolute;
   top: 0;
   left: 0;
@@ -360,7 +360,7 @@ footer.footer { display: none; }
 }
 
 /* Mobile Assistant Keypad */
-#retro-terminal .mobile-keys-bar {
+#technologic-soup-terminal .mobile-keys-bar {
   display: none;
   justify-content: space-around;
   background: rgba(0, 0, 0, 0.45);
@@ -371,7 +371,7 @@ footer.footer { display: none; }
   user-select: none;
 }
 
-#retro-terminal .mobile-key {
+#technologic-soup-terminal .mobile-key {
   flex: 1;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--text-dim);
@@ -386,14 +386,14 @@ footer.footer { display: none; }
   text-shadow: 0 0 2px var(--glow-color);
 }
 
-#retro-terminal .mobile-key:active {
+#technologic-soup-terminal .mobile-key:active {
   background: var(--text-color);
   color: var(--bg-color);
   box-shadow: 0 0 12px var(--glow-color);
 }
 
 /* Canvas overlay for Matrix code drop effect */
-#retro-terminal #matrix-canvas {
+#technologic-soup-terminal #matrix-canvas {
   position: absolute;
   top: 0;
   left: 0;
@@ -406,20 +406,20 @@ footer.footer { display: none; }
 }
 
 /* Animations — renamed to avoid collision with PaperMod keyframes */
-@keyframes retro-terminal-flicker {
+@keyframes technologic-soup-flicker {
   0% { opacity: 0.985; }
   50% { opacity: 0.995; }
   100% { opacity: 0.985; }
 }
 
-@keyframes retro-terminal-blink {
+@keyframes technologic-soup-blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
 
 /* Responsive Media Queries */
 @media (max-width: 768px) {
-  #retro-terminal .crt-monitor {
+  #technologic-soup-terminal .crt-monitor {
     width: 100%;
     height: 100%;
     border-radius: 0;
@@ -429,34 +429,34 @@ footer.footer { display: none; }
     max-height: none;
   }
 
-  #retro-terminal .crt-bezel {
+  #technologic-soup-terminal .crt-bezel {
     border-radius: 0;
     padding: 0;
     box-shadow: none;
   }
 
-  #retro-terminal .crt-screen {
+  #technologic-soup-terminal .crt-screen {
     border-radius: 0;
     border: none;
   }
 
-  #retro-terminal .terminal-body {
+  #technologic-soup-terminal .terminal-body {
     padding: 12px;
   }
 
   /* Show mobile assistance bar */
-  #retro-terminal .mobile-keys-bar {
+  #technologic-soup-terminal .mobile-keys-bar {
     display: flex;
   }
 }
 
 /* Custom list items inside output */
-#retro-terminal .list-item {
+#technologic-soup-terminal .list-item {
   padding-left: 15px;
   position: relative;
 }
 
-#retro-terminal .list-item::before {
+#technologic-soup-terminal .list-item::before {
   content: ">";
   position: absolute;
   left: 0;
@@ -464,16 +464,16 @@ footer.footer { display: none; }
 }
 
 /* Boot animation layout */
-#retro-terminal .boot-container {
+#technologic-soup-terminal .boot-container {
   display: flow-root;
   width: 100%;
 }
 
-#retro-terminal .boot-logs {
+#technologic-soup-terminal .boot-logs {
   display: block;
 }
 
-#retro-terminal .boot-logo {
+#technologic-soup-terminal .boot-logo {
   float: left;
   width: 180px;
   height: 180px;
@@ -482,14 +482,14 @@ footer.footer { display: none; }
   position: relative;
 }
 
-#retro-terminal .boot-logo canvas {
+#technologic-soup-terminal .boot-logo canvas {
   display: block;
   width: 100%;
   height: 100%;
 }
 
 @media (max-width: 768px) {
-  #retro-terminal .boot-logo {
+  #technologic-soup-terminal .boot-logo {
     float: none;
     display: block;
     width: 140px;
