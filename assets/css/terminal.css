@@ -14,7 +14,8 @@ footer.footer { display: none; }
   --text-color: #3dfa72;
   --text-dim: #1e7838;
   --glow-color: rgba(61, 250, 114, 0.45);
-  --bezel-color: #1c221e;
+  --bezel-color: #2e2e33;
+  --error-color: #F92672;
   --shadow-color: rgba(0, 0, 0, 0.7);
   --bezel-glare: rgba(255, 255, 255, 0.05);
 }
@@ -282,8 +283,8 @@ footer.footer { display: none; }
 }
 
 #crt-shell .error {
-  color: #ff3333;
-  text-shadow: 0 0 6px rgba(255, 51, 51, 0.5);
+  color: var(--error-color);
+  text-shadow: 0 0 6px rgba(249, 38, 114, 0.5);
 }
 
 /* ANSI-style Grid Tables */
