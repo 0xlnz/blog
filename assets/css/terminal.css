@@ -498,3 +498,28 @@ footer.footer { display: none; }
     margin: 0 auto 10px auto;
   }
 }
+
+/* CRT shutdown: content fades, screen warms then collapses to a soft
+   green-white phosphor line, lingers, shrinks to a point. ~2s total.
+   No pure-white flash — uses desaturated phosphor tones to stay easy on
+   the eyes while preserving the CRT discharge feel. */
+#crt-shell.shutting-down .terminal-header,
+#crt-shell.shutting-down .terminal-body {
+  animation: crt-content-vanish 0.4s ease-out forwards;
+}
+
+#crt-shell.shutting-down .crt-screen {
+  animation: crt-shutdown 2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes crt-content-vanish {
+  to { opacity: 0; }
+}
+
+@keyframes crt-shutdown {
+  0%   { transform: scaleY(1)     scaleX(1); background-color: var(--bg-color); filter: brightness(1); }
+  25%  { transform: scaleY(1)     scaleX(1); background-color: #2a352c;         filter: brightness(1.1); }
+  50%  { transform: scaleY(0.006) scaleX(1); background-color: #b8d0a8;         filter: brightness(1.2); }
+  80%  { transform: scaleY(0.006) scaleX(1); background-color: #5a7a55;         filter: brightness(0.85); }
+  100% { transform: scaleY(0.006) scaleX(0); background-color: #0a0f0b;         filter: brightness(0); }
+}

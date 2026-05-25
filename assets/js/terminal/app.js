@@ -183,6 +183,39 @@ class RetroTerminal {
     await this.bootSequence();
   }
 
+  // CRT power-off: kernel-style shutdown log + collapse animation + redirect home.
+  async shutdown() {
+    if (this.matrixActive) this.toggleMatrix();
+
+    this.isWriting = true;
+    this.input.disabled = true;
+    this.input.blur();
+
+    await this.writeLineAsync('\n<span class="bright">⏻ Initiating shutdown sequence...</span>', 'system', 8);
+    await this.sleep(220);
+    await this.writeLineAsync('<span class="dim">[ 0.012]</span> Stopping background daemons          <span class="bright">[OK]</span>', 'system', 3);
+    await this.sleep(160);
+    await this.writeLineAsync('<span class="dim">[ 0.038]</span> Unmounting virtual filesystems       <span class="bright">[OK]</span>', 'system', 3);
+    await this.sleep(180);
+    await this.writeLineAsync('<span class="dim">[ 0.071]</span> Closing network connections          <span class="bright">[OK]</span>', 'system', 3);
+    await this.sleep(160);
+    await this.writeLineAsync('<span class="dim">[ 0.104]</span> Flushing input/output buffers        <span class="bright">[OK]</span>', 'system', 3);
+    await this.sleep(180);
+    await this.writeLineAsync('<span class="dim">[ 0.137]</span> Powering down phosphor display...', 'system', 3);
+    await this.sleep(380);
+
+    // CRT power-off sound (same pattern as reboot)
+    this.playBeep(440, 0.12, 'sawtooth');
+    await this.sleep(140);
+    this.playBeep(220, 0.28, 'sawtooth');
+
+    // Trigger CRT collapse animation (handled by CSS)
+    this.root.classList.add('shutting-down');
+
+    await this.sleep(2000);
+    window.location.href = window.HOME_URL || '/';
+  }
+
   // Async boot up simulator: 3D wireframe icosahedron (left) + kernel-style boot logs (right)
   async bootSequence() {
     this.isWriting = true;

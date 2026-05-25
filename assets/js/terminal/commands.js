@@ -3,6 +3,7 @@
 const shellRoot = document.getElementById('crt-shell');
 window.SITE_TITLE = shellRoot?.dataset.siteTitle || 'Terminal';
 window.SITE_TITLE_SLUG = shellRoot?.dataset.siteSlug || 'terminal';
+window.HOME_URL = shellRoot?.dataset.homeUrl || '/';
 
 // Virtual Filesystem
 const FILESYSTEM = {
@@ -28,6 +29,7 @@ const COMMANDS = {
   'mute': 'Toggle hardware keyboard click feedback sounds',
   'clear': 'Clear screen buffer',
   'reboot': 'Reboot the terminal (rerun init sequence)',
+  'shutdown': 'Power down the CRT and return to home',
   'sudo': 'Execute command with root administrative privileges',
   'secret.sh': 'Run a retro system shell script'
 };
@@ -98,6 +100,11 @@ function executeCommand(input, terminal) {
   if (cmd === 'reboot') {
     terminal.reboot();
     return null; // reboot is async and writes its own output
+  }
+
+  if (cmd === 'shutdown') {
+    terminal.shutdown();
+    return null; // shutdown is async and redirects when complete
   }
 
   if (cmd === 'mute') {
