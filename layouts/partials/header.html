@@ -4,6 +4,7 @@
             {{- $label_text := (site.Params.label.text | default site.Title) }}
             {{- if site.Title }}
             <a href="{{ "" | absLangURL }}" accesskey="h" title="{{ $label_text }} (Alt + H)">
+                <canvas id="site-logo-canvas" class="site-logo-canvas" aria-hidden="true"></canvas>
                 {{- if site.Params.label.icon }}
                 {{- $img := resources.Get site.Params.label.icon }}
                 {{- if $img }}
@@ -110,3 +111,5 @@
         </div>
     </nav>
 </header>
+{{- $logoScript := resources.Get "js/icosahedron-logo.js" | resources.Minify | resources.Fingerprint }}
+<script src="{{ $logoScript.RelPermalink }}" defer></script>
