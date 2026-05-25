@@ -54,7 +54,7 @@
     function render() {
       const { color, isDark } = currentTheme();
       // Dark mode: white glow against dark bg is intense, so dampen it.
-      const glowScale = isDark ? 0.4 : 1;
+      const glowScale = isDark ? 0.6 : 1;
       frame++;
       angleY += 0.75;
       angleX += 0.18;
@@ -107,7 +107,7 @@
         ctx.lineWidth = lw;
         ctx.lineCap = 'round';
         ctx.shadowColor = color;
-        ctx.shadowBlur = (1.5 + 3 * dn) * dpr;
+        ctx.shadowBlur = (1.5 + 3 * dn) * dpr * glowScale;
         ctx.beginPath();
         ctx.moveTo(p0.px, p0.py);
         ctx.lineTo(p1.px, p1.py);
@@ -126,7 +126,7 @@
         ctx.globalAlpha = 0.5 + 0.5 * dn;
         ctx.fillStyle = color;
         ctx.shadowColor = color;
-        ctx.shadowBlur = 4 * pulse * dpr;
+        ctx.shadowBlur = 4 * pulse * dpr * glowScale;
         ctx.beginPath();
         ctx.arc(p.px, p.py, r, 0, Math.PI * 2);
         ctx.fill();
