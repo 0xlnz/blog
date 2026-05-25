@@ -1,6 +1,6 @@
 baseURL: "https://0xlnz.github.io/blog/"
 languageCode: "en-us"
-title: "Technologic Soup"
+title: "Split Brain"
 theme: "PaperMod"
 
 enableRobotsTXT: true
@@ -16,7 +16,7 @@ minify:
 
 params:
   env: production
-  title: My Blog
+  title: Split Brain
   description: "A personal blog about things."
   keywords: [Blog, Portfolio, PaperMod]
   author: 0xlnz
