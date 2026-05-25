@@ -50,16 +50,42 @@
   color: #999;
   font-size: 0.9rem;
   font-weight: 500;
-  margin-left: 10px; 
+  margin-left: 10px;
   margin-right: 10px;
+}
+
+/* Light-mode header: only the title bar follows the theme; the code body
+   keeps its dark code-block-bg so syntax highlighting keeps its contrast.
+   The outer window border is lightened too — otherwise it shows as a black
+   line above the title bar. */
+[data-theme="light"] .terminal-window {
+  border-color: #d0d0d0;
+  /* The window's own bg shows through at rounded corners due to anti-aliasing;
+     match the header so no dark fringe appears around the title bar. */
+  background-color: #eeeeee;
+}
+
+[data-theme="light"] .terminal-header {
+  background-color: #eeeeee;
+  border-bottom-color: #d0d0d0;
+}
+
+[data-theme="light"] .terminal-title {
+  color: #555;
 }
 
 /* Content Area */
 .terminal-content {
   padding: 0;
   color: #f8f8f2;
-  background-color: #272822; /* Exact Monokai background */
+  background-color: var(--code-block-bg); /* Match PaperMod code fences */
   position: relative;
+}
+
+/* Neutralize Chroma's own .chroma background so the unified bg from
+   .terminal-content shows through consistently. */
+.terminal-content .chroma {
+  background-color: transparent !important;
 }
 
 /* Copy Button Styling */
@@ -118,7 +144,7 @@
 .terminal-content pre {
   margin: 0 !important;
   padding: 1rem !important;
-  background-color: #272822 !important; /* Force Monokai bg */
+  background-color: var(--code-block-bg) !important;
   border: none !important;
   border-radius: 0 0 8px 8px;
   overflow-x: auto;

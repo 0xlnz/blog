@@ -18,15 +18,31 @@ Welcome to my blog! This is a just sample post to demonstrate the custom styling
 
 ## The Terminal Shortcode
 
-I can explicitly wrap any content in a `terminal` window using the shortcode:
+I can explicitly wrap any content in a `terminal` window using the shortcode. Plain content (no `lang`) gets the Monokai background and padding, but no syntax highlighting or line numbers:
 
 {{< terminal title="My Custom Window" >}}
-System.out.println("Hello from the shortcode!");
+$ ./run.sh
+[INFO] starting up...
+[OK]   ready in 42ms
+{{< /terminal >}}
+
+Pass `lang` to get full syntax highlighting and line numbers, just like a code fence — but with whatever title you want:
+
+{{< terminal lang="python" title="hello.py" >}}
+def greet(name):
+    """Greets the user."""
+    return f"Hello, {name}!"
+
+print(greet("0xlnz"))
 {{< /terminal >}}
 
 ## Automatic Code Fences
 
-Standard Markdown code fences are automatically wrapped in a terminal window with syntax highlighting and a copy button.
+Standard Markdown code fences are automatically wrapped in a terminal window with syntax highlighting and a copy button. You can override the default title (which is the language name, or `Terminal` for shell-like fences) with the `title=` attribute:
+
+```bash {title="deploy.sh"}
+./deploy --prod
+```
 
 ```python
 def greet(name):
@@ -43,7 +59,7 @@ sudo rm -rf / --no-preserve-root
 ```
 
 
-```javascript
+```javascript {title="console.js"}
 // This is JavaScript
 console.log('Traffic lights are cool.');
 ```
