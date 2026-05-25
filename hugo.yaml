@@ -54,6 +54,10 @@ menu:
       name: Blog
       url: /blog/
       weight: 10
+    - identifier: terminal
+      name: Terminal
+      url: /terminal/
+      weight: 15
     - identifier: about
       name: About
       url: /about/

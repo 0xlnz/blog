@@ -1,0 +1,58 @@
+{{ define "main" }}
+{{- $css := resources.Get "css/terminal.css" | resources.Minify | resources.Fingerprint }}
+{{- $commands := resources.Get "js/terminal/commands.js" | resources.Minify | resources.Fingerprint }}
+{{- $app := resources.Get "js/terminal/app.js" | resources.Minify | resources.Fingerprint }}
+
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<div id="retro-terminal">
+  <div class="crt-monitor">
+    <div class="crt-bezel">
+      <div class="crt-screen" id="screen">
+        <div class="scanlines"></div>
+        <div class="screen-flicker"></div>
+        <div class="screen-glare"></div>
+
+        <div class="terminal-header">
+          <div class="header-left">
+            <span class="status-indicator online"></span>
+            <span class="header-title">Retro-Term v1.82</span>
+          </div>
+          <div class="header-center">
+            <span class="header-path">guest@retro-term:~</span>
+          </div>
+          <div class="header-right">
+            <button class="header-btn" id="terminal-sound-toggle" title="Toggle Sound FX">
+              <span class="icon" id="terminal-sound-icon">🔊</span> Sound
+            </button>
+          </div>
+        </div>
+
+        <div class="terminal-body" id="terminal-body">
+          <div class="terminal-output" id="output"></div>
+          <div class="input-line">
+            <span class="prompt">guest@retro-term:~$</span>
+            <span class="input-content" id="input-display"></span><span class="cursor" id="cursor">█</span>
+            <input type="text" id="terminal-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus>
+          </div>
+        </div>
+
+        <div class="mobile-keys-bar">
+          <button class="mobile-key" data-key="Tab">TAB</button>
+          <button class="mobile-key" data-key="ArrowUp">▲</button>
+          <button class="mobile-key" data-key="ArrowDown">▼</button>
+          <button class="mobile-key" data-key="help">help</button>
+          <button class="mobile-key" data-key="matrix">matrix</button>
+          <button class="mobile-key" data-key="clear">clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ $commands.RelPermalink }}" defer></script>
+<script src="{{ $app.RelPermalink }}" defer></script>
+{{ end }}

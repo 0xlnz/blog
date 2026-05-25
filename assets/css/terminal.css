@@ -1,0 +1,499 @@
+/* Derived from /home/l/code/agy/style.css. Structural changes here are
+   intentional (scoped to #retro-terminal, PaperMod overrides). Do not rsync. */
+
+/* PaperMod layout overrides — only loaded on /terminal/ */
+main.main { max-width: none; padding: 0; }
+footer.footer { display: none; }
+
+/* Design System Tokens (terminal-scoped, single green phosphor theme) */
+#retro-terminal {
+  --font-terminal: 'VT323', monospace;
+  --font-ui: 'Share Tech Mono', monospace;
+
+  --bg-color: #0a0f0b;
+  --text-color: #3dfa72;
+  --text-dim: #1e7838;
+  --glow-color: rgba(61, 250, 114, 0.45);
+  --bezel-color: #1c221e;
+  --shadow-color: rgba(0, 0, 0, 0.7);
+  --bezel-glare: rgba(255, 255, 255, 0.05);
+}
+
+/* Scoped reset (replaces agy's universal * reset to avoid leaking) */
+#retro-terminal,
+#retro-terminal *,
+#retro-terminal *::before,
+#retro-terminal *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Wrapper (replaces agy's body rule — no longer fullscreen-on-document).
+   Background is transparent so Hugo's body color (var(--theme), set by
+   PaperMod's dark/light scheme) shows around the CRT housing. */
+#retro-terminal {
+  background: transparent;
+  color: var(--text-color);
+  font-family: var(--font-terminal);
+  font-size: 20px;
+  line-height: 1.2;
+  height: calc(100vh - var(--header-height, 64px));
+  min-height: 480px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 4px var(--glow-color);
+}
+
+/* Main CRT Monitor Housing */
+#retro-terminal .crt-monitor {
+  width: 94%;
+  height: 90%;
+  max-width: 1100px;
+  max-height: 800px;
+  background: var(--bezel-color);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow:
+    inset 0 4px 6px rgba(255, 255, 255, 0.1),
+    inset 0 -4px 6px rgba(0, 0, 0, 0.6),
+    0 15px 35px var(--shadow-color),
+    0 5px 15px rgba(0, 0, 0, 0.5);
+  border: 4px solid rgba(0, 0, 0, 0.25);
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+/* Monitor Screen Frame Bezel Inner Shadow */
+#retro-terminal .crt-bezel {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: #000;
+  padding: 8px;
+  box-shadow:
+    inset 0 10px 20px rgba(0, 0, 0, 0.8),
+    inset 0 -10px 20px rgba(0, 0, 0, 0.8),
+    0 2px 2px rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+/* The Screen itself */
+#retro-terminal .crt-screen {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.02);
+  transition: background-color 0.3s ease;
+}
+
+/* CRT Screen Effects Filter Overlays */
+#retro-terminal .scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#retro-terminal .screen-flicker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(18, 16, 16, 0.015);
+  opacity: 0.15;
+  z-index: 11;
+  pointer-events: none;
+  animation: retro-terminal-flicker 0.15s infinite;
+}
+
+#retro-terminal .screen-glare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 50% 15%,
+    rgba(255, 255, 255, 0.035) 0%,
+    rgba(0, 0, 0, 0) 70%
+  );
+  z-index: 12;
+  pointer-events: none;
+}
+
+/* Vignette border shadow */
+#retro-terminal .crt-screen::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.65) 100%);
+  z-index: 9;
+  pointer-events: none;
+}
+
+/* Header styling */
+#retro-terminal .terminal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.35);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+  padding: 10px 16px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  z-index: 8;
+  user-select: none;
+}
+
+#retro-terminal .header-left,
+#retro-terminal .header-center,
+#retro-terminal .header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#retro-terminal .status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--text-color);
+}
+#retro-terminal .status-indicator.online {
+  background-color: var(--text-color);
+}
+
+#retro-terminal .header-title {
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+#retro-terminal .header-path {
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#retro-terminal .header-btn {
+  background: transparent;
+  border: 1px solid var(--text-dim);
+  color: var(--text-color);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  padding: 3px 8px;
+  cursor: pointer;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+  text-shadow: 0 0 2px var(--glow-color);
+}
+
+#retro-terminal .header-btn:hover {
+  background: var(--text-dim);
+  color: var(--bg-color);
+  box-shadow: 0 0 10px var(--glow-color);
+}
+
+/* Terminal Body / Output Console */
+#retro-terminal .terminal-body {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 5;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar Customization */
+#retro-terminal .terminal-body::-webkit-scrollbar {
+  width: 8px;
+}
+#retro-terminal .terminal-body::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+#retro-terminal .terminal-body::-webkit-scrollbar-thumb {
+  background: var(--text-dim);
+  border-radius: 4px;
+}
+#retro-terminal .terminal-body::-webkit-scrollbar-thumb:hover {
+  background: var(--text-color);
+  box-shadow: 0 0 8px var(--glow-color);
+}
+
+#retro-terminal .terminal-output {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+/* Text elements & utilities */
+#retro-terminal .line {
+  line-height: 1.35;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+#retro-terminal .dim {
+  color: var(--text-dim);
+  text-shadow: none;
+}
+
+#retro-terminal .bright {
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 8px var(--text-color);
+}
+
+#retro-terminal .system {
+  color: var(--text-color);
+}
+
+#retro-terminal .error {
+  color: #ff3333;
+  text-shadow: 0 0 6px rgba(255, 51, 51, 0.5);
+}
+
+/* ANSI-style Grid Tables */
+#retro-terminal .terminal-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 20px;
+  margin: 10px 0;
+  padding-left: 15px;
+  border-left: 2px solid var(--text-dim);
+}
+
+#retro-terminal .grid-key {
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+#retro-terminal .grid-val {
+  color: var(--text-dim);
+}
+
+/* Prompt Line & Input */
+#retro-terminal .input-line {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+#retro-terminal .prompt {
+  color: var(--text-color);
+  margin-right: 10px;
+  font-weight: bold;
+  user-select: none;
+}
+
+#retro-terminal .input-content {
+  color: var(--text-color);
+  white-space: pre-wrap;
+  word-break: break-all;
+  min-height: 24px;
+  line-height: 24px;
+}
+
+#retro-terminal .cursor {
+  display: inline-block;
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  width: 10px;
+  height: 20px;
+  margin-left: 2px;
+  vertical-align: middle;
+  text-indent: -9999px;
+  overflow: hidden;
+  animation: retro-terminal-blink 0.8s step-end infinite;
+  box-shadow: 0 0 6px var(--glow-color);
+}
+
+/* The real input is hidden, capturing typing events */
+#retro-terminal #terminal-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: transparent;
+  caret-color: transparent;
+  cursor: default;
+  z-index: 10;
+}
+
+/* Mobile Assistant Keypad */
+#retro-terminal .mobile-keys-bar {
+  display: none;
+  justify-content: space-around;
+  background: rgba(0, 0, 0, 0.45);
+  border-top: 2px solid rgba(255, 255, 255, 0.05);
+  padding: 8px;
+  z-index: 8;
+  gap: 8px;
+  user-select: none;
+}
+
+#retro-terminal .mobile-key {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--text-dim);
+  color: var(--text-color);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  padding: 10px 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.1s ease;
+  text-shadow: 0 0 2px var(--glow-color);
+}
+
+#retro-terminal .mobile-key:active {
+  background: var(--text-color);
+  color: var(--bg-color);
+  box-shadow: 0 0 12px var(--glow-color);
+}
+
+/* Canvas overlay for Matrix code drop effect */
+#retro-terminal #matrix-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  background: transparent;
+  pointer-events: none;
+  display: none;
+}
+
+/* Animations — renamed to avoid collision with PaperMod keyframes */
+@keyframes retro-terminal-flicker {
+  0% { opacity: 0.985; }
+  50% { opacity: 0.995; }
+  100% { opacity: 0.985; }
+}
+
+@keyframes retro-terminal-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+  #retro-terminal .crt-monitor {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    padding: 0;
+    border: none;
+    max-width: none;
+    max-height: none;
+  }
+
+  #retro-terminal .crt-bezel {
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  #retro-terminal .crt-screen {
+    border-radius: 0;
+    border: none;
+  }
+
+  #retro-terminal .terminal-body {
+    padding: 12px;
+  }
+
+  /* Show mobile assistance bar */
+  #retro-terminal .mobile-keys-bar {
+    display: flex;
+  }
+}
+
+/* Custom list items inside output */
+#retro-terminal .list-item {
+  padding-left: 15px;
+  position: relative;
+}
+
+#retro-terminal .list-item::before {
+  content: ">";
+  position: absolute;
+  left: 0;
+  color: var(--text-dim);
+}
+
+/* Boot animation layout */
+#retro-terminal .boot-container {
+  display: flow-root;
+  width: 100%;
+}
+
+#retro-terminal .boot-logs {
+  display: block;
+}
+
+#retro-terminal .boot-logo {
+  float: left;
+  width: 180px;
+  height: 180px;
+  margin: 0 16px 6px 0;
+  user-select: none;
+  position: relative;
+}
+
+#retro-terminal .boot-logo canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  #retro-terminal .boot-logo {
+    float: none;
+    display: block;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 10px auto;
+  }
+}
