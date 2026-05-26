@@ -1,9 +1,24 @@
-// Small rotating wireframe icosahedron next to the site title.
-// Color follows PaperMod's theme: white in dark, black in light.
-// Derived from /home/l/code/agy boot-logo renderer, tuned for ~30px display.
+// Wireframe icosahedron renderer. Used for the header logo and reusable via
+// the {{< icosahedron >}} shortcode. Exposes window.createIcosahedron(canvas, opts).
+//
+// Options:
+//   autospin:  bool   — slow auto-rotation when not being dragged (default true)
+//   draggable: bool   — desktop mouse drag rotates the shape (default true)
+//   color:     string — 'auto' follows data-theme (white/dark, black/light), or any CSS color
 
 (function () {
-  function mount(canvas) {
+  const mounted = new WeakSet();
+
+  function createIcosahedron(canvas, opts) {
+    if (!canvas || mounted.has(canvas)) return null;
+    mounted.add(canvas);
+
+    const options = Object.assign({
+      autospin: true,
+      draggable: true,
+      color: 'auto',
+    }, opts || {});
+
     const ctx = canvas.getContext('2d');
     const dpr = Math.max(1, window.devicePixelRatio || 1);
 
@@ -39,9 +54,24 @@
 
     const Z_RANGE = 3.8;
     const pitch0 = 14 * Math.PI / 180;
-    let angleY = 0, angleX = 0, frame = 0, rafId = null;
 
-    function currentTheme() {
+    // Per-instance state
+    let angleY = 0, angleX = 0, frame = 0, rafId = null;
+    let dragging = false;
+    let lastPointerX = 0, lastPointerY = 0;
+    let velX = 0, velY = 0; // residual angular velocity in deg/frame (Y from x-drag, X from y-drag)
+
+    // Auto-spin increments (matches the pre-refactor values)
+    const AUTO_SPIN_Y = 0.75;
+    const AUTO_SPIN_X = 0.18;
+    const DRAG_SENSITIVITY = 0.4;     // deg/px
+    const INERTIA_DECAY = 0.93;       // per-frame multiplier
+    const RESUME_THRESHOLD = 0.2;     // deg/frame; below this auto-spin contributes
+
+    function colors() {
+      if (options.color && options.color !== 'auto') {
+        return { color: options.color, isDark: false };
+      }
       const t = document.documentElement.dataset.theme;
       const isDark = t === 'dark'
         ? true
@@ -51,13 +81,69 @@
       return { color: isDark ? '#ffffff' : '#000000', isDark };
     }
 
+    // ── Pointer drag (desktop mouse only) ───────────────────────────────
+    function onPointerDown(e) {
+      if (e.pointerType !== 'mouse') return;
+      dragging = true;
+      lastPointerX = e.clientX;
+      lastPointerY = e.clientY;
+      velX = 0;
+      velY = 0;
+      canvas.classList.add('dragging');
+      try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
+      e.preventDefault();
+    }
+
+    function onPointerMove(e) {
+      if (!dragging || e.pointerType !== 'mouse') return;
+      const dx = e.clientX - lastPointerX;
+      const dy = e.clientY - lastPointerY;
+      lastPointerX = e.clientX;
+      lastPointerY = e.clientY;
+      const dyaw = dx * DRAG_SENSITIVITY;
+      const dpitch = dy * DRAG_SENSITIVITY;
+      angleY += dyaw;
+      angleX += dpitch;
+      velY = dyaw;     // velocity for Y angle (from horizontal drag)
+      velX = dpitch;   // velocity for X angle (from vertical drag)
+    }
+
+    function endDrag(e) {
+      if (!dragging) return;
+      dragging = false;
+      canvas.classList.remove('dragging');
+      if (e && canvas.hasPointerCapture && canvas.hasPointerCapture(e.pointerId)) {
+        try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
+      }
+    }
+
+    if (options.draggable) {
+      canvas.addEventListener('pointerdown', onPointerDown);
+      canvas.addEventListener('pointermove', onPointerMove);
+      canvas.addEventListener('pointerup', endDrag);
+      canvas.addEventListener('pointercancel', endDrag);
+      canvas.addEventListener('lostpointercapture', endDrag);
+    }
+
+    // ── Animation step ──────────────────────────────────────────────────
+    function update() {
+      if (dragging) return; // angles already updated by pointermove
+      // Apply residual inertia, decaying each frame.
+      angleY += velY;
+      angleX += velX;
+      velY *= INERTIA_DECAY;
+      velX *= INERTIA_DECAY;
+      // Once inertia has faded, layer the auto-spin back in.
+      if (options.autospin && Math.abs(velY) < RESUME_THRESHOLD && Math.abs(velX) < RESUME_THRESHOLD) {
+        angleY += AUTO_SPIN_Y;
+        angleX += AUTO_SPIN_X;
+      }
+    }
+
     function render() {
-      const { color, isDark } = currentTheme();
-      // Dark mode: white glow against dark bg is intense, so dampen it.
+      const { color, isDark } = colors();
       const glowScale = isDark ? 0.6 : 1;
       frame++;
-      angleY += 0.75;
-      angleX += 0.18;
       const wobble = Math.sin(frame * 0.018) * 0.10;
 
       const w = canvas.width, h = canvas.height;
@@ -93,7 +179,6 @@
         return { u, v, i, avgZ: (projected[u].z + projected[v].z) / 2 };
       }).sort((a, b) => a.avgZ - b.avgZ);
 
-      // Wireframe edges with depth-modulated opacity + subtle glow
       for (const edge of sortedEdges) {
         const { u, v, avgZ } = edge;
         const p0 = projected[u], p1 = projected[v];
@@ -115,7 +200,6 @@
         ctx.restore();
       }
 
-      // Vertex dots with pulse
       const pulse = 0.55 + 0.45 * Math.sin(angleY * 0.06);
       for (let i = 0; i < projected.length; i++) {
         const p = projected[i];
@@ -135,6 +219,7 @@
     }
 
     function loop() {
+      update();
       render();
       rafId = requestAnimationFrame(loop);
     }
@@ -144,16 +229,39 @@
     } else {
       rafId = requestAnimationFrame(loop);
     }
+
+    return {
+      destroy() {
+        if (rafId != null) cancelAnimationFrame(rafId);
+        rafId = null;
+        canvas.removeEventListener('pointerdown', onPointerDown);
+        canvas.removeEventListener('pointermove', onPointerMove);
+        canvas.removeEventListener('pointerup', endDrag);
+        canvas.removeEventListener('pointercancel', endDrag);
+        canvas.removeEventListener('lostpointercapture', endDrag);
+      },
+    };
   }
 
-  function init() {
-    const canvas = document.getElementById('site-logo-canvas');
-    if (canvas) mount(canvas);
+  // Expose for the shortcode and any external callers.
+  window.createIcosahedron = createIcosahedron;
+
+  function autoMount() {
+    const headerCanvas = document.getElementById('site-logo-canvas');
+    if (headerCanvas) {
+      createIcosahedron(headerCanvas, { autospin: true, draggable: true, color: 'auto' });
+    }
+    const shortcodeCanvases = document.querySelectorAll('canvas[data-icosahedron-config]');
+    shortcodeCanvases.forEach(c => {
+      let cfg = {};
+      try { cfg = JSON.parse(c.dataset.icosahedronConfig || '{}'); } catch (_) {}
+      createIcosahedron(c, cfg);
+    });
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', autoMount);
   } else {
-    init();
+    autoMount();
   }
 })();

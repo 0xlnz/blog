@@ -1,0 +1,10 @@
+{{- $size := .Get "size" | default "200" -}}
+{{- $color := .Get "color" | default "auto" -}}
+{{- $draggable := eq (.Get "draggable" | default "true") "true" -}}
+{{- $autospin := eq (.Get "autospin" | default "true") "true" -}}
+{{- $cfg := dict "autospin" $autospin "draggable" $draggable "color" $color -}}
+<canvas
+  class="icosahedron-shortcode-canvas{{ if $draggable }} draggable{{ end }}"
+  style="width:{{ $size }}px;height:{{ $size }}px;"
+  data-icosahedron-config='{{ $cfg | jsonify }}'
+  aria-hidden="true"></canvas>

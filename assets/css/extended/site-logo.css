@@ -6,10 +6,31 @@
     vertical-align: middle;
     margin-right: 0px;
     flex-shrink: 0;
+    cursor: grab;
+    touch-action: none;
+}
+
+.site-logo-canvas.dragging {
+    cursor: grabbing;
 }
 
 .logo a {
     display: inline-flex;
     align-items: center;
     gap: 0;
+}
+
+/* Reusable icosahedron via {{< icosahedron >}} shortcode */
+.icosahedron-shortcode-canvas {
+    display: block;
+    margin: 1.5rem auto;
+    touch-action: none;
+}
+
+.icosahedron-shortcode-canvas.draggable {
+    cursor: grab;
+}
+
+.icosahedron-shortcode-canvas.draggable.dragging {
+    cursor: grabbing;
 }
