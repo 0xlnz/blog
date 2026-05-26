@@ -59,8 +59,8 @@ menu:
       url: /terminal/
       weight: 15
     - identifier: about
-      name: About
-      url: /about/
+      name: Whoami
+      url: /whoami/
       weight: 20
     - identifier: tags
       name: Tags
